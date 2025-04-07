@@ -9,11 +9,11 @@ type State = {
 };
 
 export class Clock extends React.Component<Props, State> {
-  state: State = {
+  state: Readonly<State> = {
     today: new Date(),
   };
 
-  timerId: number = 0;
+  timerId: number | null = null;
 
   componentDidMount() {
     this.timerId = window.setInterval(() => {
