@@ -14,21 +14,21 @@ type State = {
 };
 
 export class App extends React.Component<State> {
-  state: Readonly<State> = {
+  state: State = {
     clockName: 'Clock-0',
     isClock: true,
   };
 
   timerId: number | undefined;
 
-  handleRightMouseClick = () => {
+  hideClock = () => {
     this.setState(currentState => ({
       ...currentState,
       isClock: false,
     }));
   };
 
-  handleLeftMouseClick = () => {
+  showClock = () => {
     this.setState(currentState => ({
       ...currentState,
       isClock: true,
@@ -39,15 +39,15 @@ export class App extends React.Component<State> {
     this.timerId = window.setInterval(() => {
       this.setState({ clockName: getRandomName() });
     }, 3300);
-    document.addEventListener('contextmenu', this.handleRightMouseClick);
-    document.addEventListener('click', this.handleLeftMouseClick);
+    document.addEventListener('contextmenu', this.hideClock);
+    document.addEventListener('click', this.showClock);
   }
 
   componentWillUnmount() {
     if (this.timerId) {
       clearInterval(this.timerId);
-      document.removeEventListener('contextmenu', this.handleRightMouseClick);
-      document.removeEventListener('click', this.handleLeftMouseClick);
+      document.removeEventListener('contextmenu', this.hideClock);
+      document.removeEventListener('click', this.showClock);
     }
   }
 
